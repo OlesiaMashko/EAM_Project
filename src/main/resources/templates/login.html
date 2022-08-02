@@ -1,0 +1,23 @@
+
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<title>Login Page</title>
+<link href="webjars/bootstrap/4.6.0/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<div class="Login-form">
+	<div class="container-fluid">	
+	<a th:href = "@{/showNewUserForm}" class="btn btn-primary btn-sm mb-3"> Registration </a>
+	<a th:href = "@{/adminLogin}" class="btn btn-primary btn-sm mb-3"> Admin? </a>			
+		<form method="post">
+			<input type="text" name="username" class="form-control mt-3" placeholder="Enter Username"/>
+			<input type="password" name="password" class="form-control mt-3" placeholder="Enter Password"/>
+			<input type="submit" value="Login" class="btn btn-block btn-dark mt-3"/>
+		</form>
+		
+	</div>
+</div>
+</body>
+</html>
