@@ -15,7 +15,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import net.javaguides.springboot.model.Product;
 import net.javaguides.springboot.model.User;
+import net.javaguides.springboot.service.ProductService;
 import net.javaguides.springboot.service.UserService;
 
 @Controller
@@ -26,6 +28,9 @@ public class UserController {
 	
 	@Autowired
 	private UserService userService;
+	
+	@Autowired
+	private ProductService productService;
 	
 	
 	
@@ -49,19 +54,68 @@ public class UserController {
 		return "login";
 	}
 	
+	@GetMapping("/")
+	public String viewHomePage(Model model) {
+		return findPaginated(1, "id", "asc", model);		
+	}
 	
+	@GetMapping("/showNewProductForm")
+	public String showNewProductForm(Model model) {
+		Product product = new Product();
+		model.addAttribute("uname", uname);
+		model.addAttribute("product", product);
+		product.setUsername(uname);
+		
+		System.out.println(uname);
+		return "new_product";
+	}
 	
+	@PostMapping("/saveProduct")
+	public String saveProduct(@ModelAttribute("product") Product product) {
+		
+		
+		productService.saveProduct(product);
+		return "redirect:/";
+	}
+	
+	@GetMapping("/showFormForUpdate/{id}")
+	public String showFormForUpdate(@PathVariable ( value = "id") long id, Model model) {
+		
+		Product product = productService.getProductById(id);
+		
+		model.addAttribute("product", product);
+		return "update_product";
+	}
 	
 	
 	@GetMapping("/showNewUserForm")
 	public String showNewUserForm(Model model) {
-		// create model attribute to bind form data
 		User user = new User();
 		model.addAttribute("user", user);
 		return "registration";
 	}
 	
-	
+	@GetMapping("/page/{pageNo}")
+	public String findPaginated(@PathVariable (value = "pageNo") int pageNo, 
+			@RequestParam("sortField") String sortField,
+			@RequestParam("sortDir") String sortDir,
+			Model model) {
+		int pageSize = 5;
+		
+		Page<Product> page = productService.findPaginated(pageNo, pageSize, sortField, sortDir,uname);
+		List<Product> listProducts = page.getContent();
+		
+		model.addAttribute("currentPage", pageNo);
+		model.addAttribute("totalPages", page.getTotalPages());
+		model.addAttribute("totalItems", page.getTotalElements());
+		
+		model.addAttribute("sortField", sortField);
+		model.addAttribute("sortDir", sortDir);
+		model.addAttribute("reverseSortDir", sortDir.equals("asc") ? "desc" : "asc");
+		
+		model.addAttribute("listProducts", listProducts);
+		return "index";
+	}
 	
 	
 	@PostMapping("/saveUser")
