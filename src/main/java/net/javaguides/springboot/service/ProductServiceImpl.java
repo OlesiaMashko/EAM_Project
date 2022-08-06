@@ -10,8 +10,10 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import net.javaguides.springboot.model.Claims;
 import net.javaguides.springboot.model.Product;
 import net.javaguides.springboot.model.User;
+import net.javaguides.springboot.repository.ClaimRepository;
 import net.javaguides.springboot.repository.ProductRepository;
 import net.javaguides.springboot.repository.UserRepository;
 
@@ -24,6 +26,8 @@ public class ProductServiceImpl implements ProductService {
 	@Autowired
 	private UserRepository userRepository;
 	
+	@Autowired
+	private ClaimRepository claimRepository;
 
 	@Override
 	public List<Product> getAllProducts(String username) {
@@ -54,6 +58,22 @@ public class ProductServiceImpl implements ProductService {
 	}
 	
 
+	@Override
+	public void saveClaim(Claims claim) {
+		this.claimRepository.save(claim);
+		
+	}
+	
+	@Override
+	public Page<Claims> findPaginatedClaim(int pageNo, int pageSize, String sortField, String sortDirection,String pname) {
+		Sort sort = sortDirection.equalsIgnoreCase(Sort.Direction.ASC.name()) ? Sort.by(sortField).ascending() :
+			Sort.by(sortField).descending();
+		
+		Pageable pageable = PageRequest.of(pageNo - 1, pageSize, sort);
+
+	return this.claimRepository.findByProductName(pname,pageable);
+	}
+	
 	@Override
 	public Page<Product> findPaginated(int pageNo, int pageSize, String sortField, String sortDirection, String uname) {
 		Sort sort = sortDirection.equalsIgnoreCase(Sort.Direction.ASC.name()) ? Sort.by(sortField).ascending() :

@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import net.javaguides.springboot.model.Claims;
 import net.javaguides.springboot.model.Product;
 import net.javaguides.springboot.model.User;
 import net.javaguides.springboot.service.ProductService;
@@ -95,6 +96,56 @@ public class UserController {
 		return "registration";
 	}
 	
+	@GetMapping("/claims/{productName}")
+	public String viewClaimPage(Model model,@PathVariable ( value = "productName") String productName) {
+		pname = productName;
+		return findPaginatedClaim(1, "product_name", "asc", model);		
+	}
+	
+	@PostMapping("/saveClaim")
+	public String saveClaim(@ModelAttribute("claim") Claims claim) {
+		// save employee to database
+		
+		productService.saveClaim(claim);
+		return "redirect:/";
+	}
+	
+	@GetMapping("/showFormForClaim/{productName}")
+	public String showFormForClaim(@PathVariable ( value = "productName") String productName, Model model) {
+		
+		// get employee from the service
+		Product product = productService.getProductByName(productName);
+		
+		// set employee as a model attribute to pre-populate the form
+		Claims claim = new Claims();
+		model.addAttribute("pname", productName);
+		model.addAttribute("claim", claim);
+		claim.setProductName(productName);
+		return "doClaim";
+	}
+	
+	@GetMapping("/pagec/{pageNo}")
+	public String findPaginatedClaim(@PathVariable (value = "pageNo") int pageNo, 
+			@RequestParam("sortField") String sortField,
+			@RequestParam("sortDir") String sortDir,
+			Model model) {
+		int pageSize = 5;
+		
+		Page<Claims> page = productService.findPaginatedClaim(pageNo, pageSize, sortField, sortDir,pname);
+		List<Claims> listClaims = page.getContent();
+		
+		model.addAttribute("currentPage", pageNo);
+		model.addAttribute("totalPages", page.getTotalPages());
+		model.addAttribute("totalItems", page.getTotalElements());
+		
+		model.addAttribute("sortField", sortField);
+		model.addAttribute("sortDir", sortDir);
+		model.addAttribute("reverseSortDir", sortDir.equals("asc") ? "desc" : "asc");
+		
+		model.addAttribute("listClaims", listClaims);
+		return "displayClaims";
+	}
+	
 	@GetMapping("/page/{pageNo}")
 	public String findPaginated(@PathVariable (value = "pageNo") int pageNo, 
 			@RequestParam("sortField") String sortField,
@@ -123,6 +174,13 @@ public class UserController {
 		// save employee to database
 		uname = username;
 		userService.saveUser(user);
+		return "redirect:/";
+	}
+	@GetMapping("/deleteProduct/{id}")
+	public String deleteProduct(@PathVariable (value = "id") long id) {
+		
+		// call delete employee method 
+		this.productService.deleteProductById(id);
 		return "redirect:/";
 	}
 	
