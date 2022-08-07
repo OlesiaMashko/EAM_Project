@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<title>Employee Management System</title>
+
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+	integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+	crossorigin="anonymous">
+	
+</head>
+<body>
+
+	<div class="container my-2">
+	<h1>Claims List</h1>
+	
+	
+	
+		<table border="1" class = "table table-striped table-responsive-md">
+			<thead>
+				<tr>
+					<th>
+						<a th:href="@{'/pagec/' + ${currentPage} + '?sortField=claimDate&sortDir=' + ${reverseSortDir}}">
+							Claim Date</a>
+					</th>
+					<th>
+					<a th:href="@{'/pagec/' + ${currentPage} + '?sortField=productName&sortDir=' + ${reverseSortDir}}">
+							Product</a>
+					</th>
+					<th>
+					<a th:href="@{'/pagec/' + ${currentPage} + '?sortField=issue&sortDir=' + ${reverseSortDir}}">
+							issue</a>
+					</th>
+					<th>
+					<a th:href="@{'/pagec/' + ${currentPage} + '?sortField=status&sortDir=' + ${reverseSortDir}}">
+							status</a>
+					</th>
+					
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="claim : ${listClaims}">
+					<td th:text="${claim.claimDate}"></td>
+					<td th:text="${claim.productName}"></td>
+					<td th:text="${claim.issue}"></td>
+					<td th:text="${claim.status}"></td>
+					
+				</tr>
+			</tbody>
+		</table>
+		
+		<div th:if = "${totalPages > 1}">
+			<div class = "row col-sm-10">
+				<div class = "col-sm-2">
+					Total Rows: [[${totalItems}]] 
+				</div>
+				<div class = "col-sm-1">
+					<span th:each="i: ${#numbers.sequence(1, totalPages)}">
+						<a th:if="${currentPage != i}" th:href="@{'/pagec/' + ${i}+ '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">[[${i}]]</a>
+						<span th:unless="${currentPage != i}">[[${i}]]</span>  &nbsp; &nbsp;
+					</span>
+				</div>
+				<div class = "col-sm-1">
+					<a th:if="${currentPage < totalPages}" th:href="@{'/pagec/' + ${currentPage + 1}+ '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">Next</a>
+					<span th:unless="${currentPage < totalPages}">Next</span>
+				</div>
+				
+				 <div class="col-sm-1">
+    				<a th:if="${currentPage < totalPages}" th:href="@{'/pagec/' + ${totalPages}+ '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">Last</a>
+					<span th:unless="${currentPage < totalPages}">Last</span>
+   				 </div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>
