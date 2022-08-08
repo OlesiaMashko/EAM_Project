@@ -54,6 +54,81 @@ public class UserController {
 		return "login";
 	}
 	
+	@RequestMapping(value="/adminLogin",method=RequestMethod.GET)
+	public String AadminLoginPage() {
+		return "adminLogin";
+	}
+	
+	@PostMapping("/adminLogin")
+	public String AdminPage(ModelMap model,Model model1, @RequestParam String username, @RequestParam String password) {
+		
+		if(userService.getAdmin(username, password)) {
+			model.put("username",username);
+			System.out.println(username);
+			//uname = username;
+			return "redirect:/users";
+			
+		}
+		model.put("errMsg", "Bad Credential");
+		return "adminLogin";
+	}
+	
+	@GetMapping("/users")
+	public String viewUsers(Model model) {
+		
+		return findPaginatedUser(1, "id", "asc", model);		
+	}
+	
+	@GetMapping("/userSpecific/{username}")
+	public String viewUserProducts(Model model,@PathVariable ( value = "username") String username) {
+		uname = username;
+		return findPaginatedAdmin(1, "id", "asc", model);		
+	}
+	
+	@GetMapping("/pageu/{pageNo}")
+	public String findPaginatedUser(@PathVariable (value = "pageNo") int pageNo, 
+			@RequestParam("sortField") String sortField,
+			@RequestParam("sortDir") String sortDir,
+			Model model) {
+		int pageSize = 5;
+		
+		Page<User> page = productService.findPaginatedUser(pageNo, pageSize, sortField, sortDir);
+		List<User> listUsers = page.getContent();
+		
+		model.addAttribute("currentPage", pageNo);
+		model.addAttribute("totalPages", page.getTotalPages());
+		model.addAttribute("totalItems", page.getTotalElements());
+		
+		model.addAttribute("sortField", sortField);
+		model.addAttribute("sortDir", sortDir);
+		model.addAttribute("reverseSortDir", sortDir.equals("asc") ? "desc" : "asc");
+		
+		model.addAttribute("listUsers", listUsers);
+		return "displayUsers";
+	}
+	
+	@GetMapping("/pageAdmin/{pageNo}")
+	public String findPaginatedAdmin(@PathVariable (value = "pageNo") int pageNo, 
+			@RequestParam("sortField") String sortField,
+			@RequestParam("sortDir") String sortDir,
+			Model model) {
+		int pageSize = 5;
+		
+		Page<Product> page = productService.findPaginated(pageNo, pageSize, sortField, sortDir,uname);
+		List<Product> listProducts = page.getContent();
+		
+		model.addAttribute("currentPage", pageNo);
+		model.addAttribute("totalPages", page.getTotalPages());
+		model.addAttribute("totalItems", page.getTotalElements());
+		
+		model.addAttribute("sortField", sortField);
+		model.addAttribute("sortDir", sortDir);
+		model.addAttribute("reverseSortDir", sortDir.equals("asc") ? "desc" : "asc");
+		
+		model.addAttribute("listProducts", listProducts);
+		return "productListAdmin";
+	}
+	
 	@GetMapping("/")
 	public String viewHomePage(Model model) {
 		return findPaginated(1, "id", "asc", model);		

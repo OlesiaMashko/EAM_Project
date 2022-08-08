@@ -13,7 +13,7 @@ public interface ProductService {
 	Product getProductById(long id);
 	void deleteProductById(long id);
 	Page<Product> findPaginated(int pageNo, int pageSize, String sortField, String sortDirection, String uname);
-	
+	Page<User> findPaginatedUser(int pageNo, int pageSize, String sortField, String sortDirection);
 	List<Product> getAllProducts();
 	Product getProductByName(String productName);
 	
