@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,8 +23,8 @@ import net.javaguides.springboot.service.UserService;
 @Controller
 public class AdminController {
 	
-	String uname;
-	String pname;
+	String tempUsername;
+	String tempProductname;
 	
 	@Autowired
 	private UserService userService;
@@ -58,8 +59,16 @@ public class AdminController {
 	
 	@GetMapping("/userSpecific/{username}")
 	public String viewUserProducts(Model model,@PathVariable ( value = "username") String username) {
-		uname = username;
+		tempUsername = username;
 		return findPaginatedAdmin(1, "id", "asc", model);		
+	}
+	
+	@PostMapping("/updateProduct")
+	public String updateProduct(@ModelAttribute("product") Product product) {
+		
+		
+		productService.saveProduct(product);
+		return "redirect:/userSpecific/" + tempUsername;
 	}
 	
 	@GetMapping("/pageu/{pageNo}")
@@ -91,7 +100,7 @@ public class AdminController {
 			Model model) {
 		int pageSize = 5;
 		
-		Page<Product> page = productService.findPaginated(pageNo, pageSize, sortField, sortDir,uname);
+		Page<Product> page = productService.findPaginated(pageNo, pageSize, sortField, sortDir,tempUsername);
 		List<Product> listProducts = page.getContent();
 		
 		model.addAttribute("currentPage", pageNo);

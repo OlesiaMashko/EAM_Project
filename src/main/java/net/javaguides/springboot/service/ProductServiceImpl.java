@@ -57,23 +57,18 @@ public class ProductServiceImpl implements ProductService {
 		this.productRepository.deleteById(id);
 	}
 	
-
 	@Override
-	public void saveClaim(Claims claim) {
-		this.claimRepository.save(claim);
-		
+	public void approveClaimById(long id) {
+	
+		this.claimRepository.approveClaim("approved",id);
 	}
 	
 	@Override
-	public Page<Claims> findPaginatedClaim(int pageNo, int pageSize, String sortField, String sortDirection,String pname) {
-		Sort sort = sortDirection.equalsIgnoreCase(Sort.Direction.ASC.name()) ? Sort.by(sortField).ascending() :
-			Sort.by(sortField).descending();
+	public void rejectClaimById(long id) {
 		
-		Pageable pageable = PageRequest.of(pageNo - 1, pageSize, sort);
-
-	return this.claimRepository.findByProductName(pname,pageable);
+		this.claimRepository.approveClaim("rejected",id);
 	}
-	
+
 	@Override
 	public Page<Product> findPaginated(int pageNo, int pageSize, String sortField, String sortDirection, String uname) {
 		Sort sort = sortDirection.equalsIgnoreCase(Sort.Direction.ASC.name()) ? Sort.by(sortField).ascending() :
@@ -105,6 +100,32 @@ public class ProductServiceImpl implements ProductService {
 	}
 
 	@Override
+	public void saveClaim(Claims claim) {
+		this.claimRepository.save(claim);
+		
+	}
+
+	@Override
+	public Page<Claims> findPaginatedClaim(int pageNo, int pageSize, String sortField, String sortDirection,String pname) {
+		Sort sort = sortDirection.equalsIgnoreCase(Sort.Direction.ASC.name()) ? Sort.by(sortField).ascending() :
+			Sort.by(sortField).descending();
+		
+		Pageable pageable = PageRequest.of(pageNo - 1, pageSize, sort);
+
+	return this.claimRepository.findByProductName(pname,pageable);
+	}
+	
+	@Override
+	public Page<Claims> findPaginatedClaimAdmin(int pageNo, int pageSize, String sortField, String sortDirection,String pname) {
+		Sort sort = sortDirection.equalsIgnoreCase(Sort.Direction.ASC.name()) ? Sort.by(sortField).ascending() :
+			Sort.by(sortField).descending();
+		
+		Pageable pageable = PageRequest.of(pageNo - 1, pageSize, sort);
+
+	return this.claimRepository.findByProductName(pname,pageable);
+	}
+
+	@Override
 	public Page<User> findPaginatedUser(int pageNo, int pageSize, String sortField, String sortDirection) {
 		// TODO Auto-generated method stub
 		Sort sort = sortDirection.equalsIgnoreCase(Sort.Direction.ASC.name()) ? Sort.by(sortField).ascending() :
@@ -115,7 +136,17 @@ public class ProductServiceImpl implements ProductService {
 	return this.userRepository.findAll(pageable);
 	}
 
-
+	@Override
+	public Page<Product> findPaginatedAdmin(int pageNo, int pageSize, String sortField, String sortDirection,
+			String uname) {
+		Sort sort = sortDirection.equalsIgnoreCase(Sort.Direction.ASC.name()) ? Sort.by(sortField).ascending() :
+			Sort.by(sortField).descending();
+		
+		Pageable pageable = PageRequest.of(pageNo - 1, pageSize, sort);
+		
+	String username = "parth";
+	return this.productRepository.findByUserName(uname,pageable);
+	}
 
 	
 }
