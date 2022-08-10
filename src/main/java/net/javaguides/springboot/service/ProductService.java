@@ -14,7 +14,11 @@ public interface ProductService {
 	Product getProductById(long id);
 	void deleteProductById(long id);
 	Page<Product> findPaginated(int pageNo, int pageSize, String sortField, String sortDirection, String uname);
+
+	Page<User> findPaginatedUser(int pageNo, int pageSize, String sortField, String sortDirection);
+
 	Page<Claims> findPaginatedClaim(int pageNo, int pageSize, String sortField, String sortDirection, String pname);
+
 	List<Product> getAllProducts();
 	Product getProductByName(String productName);
 	void saveClaim(Claims claim);

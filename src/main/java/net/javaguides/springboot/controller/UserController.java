@@ -33,9 +33,6 @@ public class UserController {
 	@Autowired
 	private ProductService productService;
 	
-	
-	
-	
 	@RequestMapping(value="/login",method=RequestMethod.GET)
 	public String loginPage() {
 		return "login";
@@ -54,6 +51,10 @@ public class UserController {
 		model.put("errMsg", "Wrong username or password, please try again!");
 		return "login";
 	}
+	
+
+	
+	
 	
 	@GetMapping("/")
 	public String viewHomePage(Model model) {
