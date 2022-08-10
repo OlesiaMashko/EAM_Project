@@ -43,7 +43,7 @@ public class AdminController {
 		if(userService.getAdmin(username, password)) {
 			model.put("username",username);
 			System.out.println(username);
-			//uname = username;
+		
 			return "redirect:/users";
 			
 		}

@@ -43,7 +43,7 @@ public class ClaimController {
 	
 	@PostMapping("/saveClaim")
 	public String saveClaim(@ModelAttribute("claim") Claims claim) {
-		// save employee to database
+
 		
 		productService.saveClaim(claim);
 		return "redirect:/";
@@ -52,10 +52,7 @@ public class ClaimController {
 	@GetMapping("/showFormForClaim/{productName}")
 	public String showFormForClaim(@PathVariable ( value = "productName") String productName, Model model) {
 		
-		// get employee from the service
 		Product product = productService.getProductByName(productName);
-		
-		// set employee as a model attribute to pre-populate the form
 		Claims claim = new Claims();
 		model.addAttribute("pname", productName);
 		model.addAttribute("claim", claim);
@@ -66,7 +63,6 @@ public class ClaimController {
 	
 	@PostMapping("/saveClaimAdmin")
 	public String saveClaimAdmin(@ModelAttribute("claim") Claims claim) {
-		// save employee to database
 		
 		productService.saveClaim(claim);
 		return "redirect:/userSpecific/" + tempUsername;
@@ -75,10 +71,8 @@ public class ClaimController {
 	@GetMapping("/showFormForClaimAdmin/{productName}")
 	public String showFormForClaimAdmin(@PathVariable ( value = "productName") String productName, Model model) {
 		
-		// get employee from the service
 		Product product = productService.getProductByName(productName);
 		
-		// set employee as a model attribute to pre-populate the form
 		Claims claim = new Claims();
 		model.addAttribute("pname", productName);
 		model.addAttribute("claim", claim);
@@ -90,15 +84,13 @@ public class ClaimController {
 	@GetMapping("/approveClaim/{id}")
 	public String approveClaim(@PathVariable (value = "id") long id) {
 		
-		// call delete employee method 
 		this.productService.approveClaimById(id);
 		return "redirect:/claimsAdmin/" + tempProductname;
 	}
 	
 	@GetMapping("/rejectClaim/{id}")
 	public String rejectClaim(@PathVariable (value = "id") long id) {
-		
-		// call delete employee method 
+		 
 		this.productService.rejectClaimById(id);
 		return "redirect:/claimsAdmin/" + tempProductname;
 	}
