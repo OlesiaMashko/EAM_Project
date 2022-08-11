@@ -3,37 +3,32 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <title>Product Management System</title>
-<link rel="stylesheet"
-	href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
-	integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
-	crossorigin="anonymous">
+	<link rel="stylesheet" th:href="@{/css/styles.css}"/>
 </head>
 <body>
-<p th:text="'Hello, ' + ${uname} + '!'" />
-	<div class="container">
-		<h1>Product Management System</h1>
+	<div  class="index">
+		<h1 class="headerSign">Product Management System</h1>
 		<hr>
 		<h2>Save Product</h2>
 
 		<form action="#" th:action="@{/saveProduct}" th:object="${product}"
 			method="POST">
 			<input type="text" th:field="*{productName}"
-				placeholder="Name" class="form-control mb-4 col-4">
+				placeholder="Enter Product" class="form-control mb-4 col-4">
 				
 				<input type="text" th:field="*{serialNo}"
-				placeholder="Serial No" class="form-control mb-4 col-4">
+				placeholder="Enter Serial No" class="form-control mb-4 col-4">
 				
 				<input type="text" th:field="*{purchaseDate}"
-				placeholder="Purchase Date" class="form-control mb-4 col-4">
+				placeholder="Enter Purchase Date" class="form-control mb-4 col-4">
 				
-				<input type="text" th:field="*{username}" class="form-control mb-4 col-4">
+				<input type="text" th:field="*{username}" class="form-control mb-4 col-4" >
 				
-				<button type="submit" class="btn btn-info col-2"> Save Product</button>
+				<button type="submit" class="btn btn-info col-2"> Save Product</button> |
+				<a th:href = "@{/}" class="btn btn-primary">Go Back</a>
 		</form>
 		
-		<hr>
-		
-		<a th:href = "@{/}"> Back to Product List</a>
+		<br><hr>
 	</div>
 </body>
 </html>
