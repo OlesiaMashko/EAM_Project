@@ -10,7 +10,7 @@ import net.javaguides.springboot.model.User;
 
 public interface ProductService {
 	List<Product> getAllProducts(String username);
-	void saveProduct(Product employee);
+	void saveProduct(Product product);
 	void saveClaim(Claims claim);
 	Product getProductById(long id);
 	void deleteProductById(long id);

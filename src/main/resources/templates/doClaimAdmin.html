@@ -13,14 +13,12 @@
 
 		<form action="#" th:action="@{/saveClaimAdmin}" th:object="${claim}"
 			method="POST">
-			
-			<!-- Add hidden form field to handle update -->
 
 			<input type="text" th:field="*{claimDate}" class="form-control mb-4 col-4" placeholder="Enter Claim Date">
 				
 				<input type="text" th:field="*{issue}" class="form-control mb-4 col-4" placeholder="Enter The Issue">
 				
-				<input type="text" th:field="*{productName}" class="form-control mb-4 col-4">
+				<input type="hidden" th:field="*{productName}" class="form-control mb-4 col-4">
 				
 				<button type="submit" class="btn btn-info col-2"> Do Claim</button>
 		</form>

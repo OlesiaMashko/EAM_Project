@@ -48,7 +48,6 @@ public class UserController {
 			return "redirect:/";
 			
 		}
-		model.put("errMsg", "Wrong username or password, please try again!");
 		return "login";
 	}
 	
