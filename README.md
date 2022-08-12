@@ -22,8 +22,10 @@ features
 5. view all claims for product
 6. approve / reject claims
 
+in this project, we are using Controllers, Models, Repositories and Service classes.
 #DATABASE:
 in database we are using MySql database and we have 4 tables in database
+#this tables will create by it self when we run the project as spring boot application.
 1. users
 2. admin
 3. products
