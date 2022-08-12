@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="ISO-8859-1">
+	<title>Error Page</title>
+	<!-- <link rel="stylesheet" href="styles.css">-->
+	<link rel="stylesheet" th:href="@{/css/styles.css}"/>
+</head>
+<body>
+<div class="index">
+	<div class="container-fluid">
+	<div class="foot-cnt">
+		<h2 style="color:red">Wrong User Name or Password, please try again!</h2>
+		<a th:href = "@{/showNewUserForm}" class="btn btn-primary btn-sm mb-3"> Register </a> |
+		<a th:href = "@{/adminLogin}" class="btn btn-primary btn-sm mb-3"> Admin </a> |
+		<a th:href = "@{/login}" class="btn btn-primary btn-sm mb-3"> Login </a>
+	</div>		
+</div>
+</body>
+</html>

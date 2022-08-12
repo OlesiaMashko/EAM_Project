@@ -47,8 +47,7 @@ public class AdminController {
 			return "redirect:/users";
 			
 		}
-		model.put("errMsg", "Bad Credential");
-		return "adminLogin";
+		return "error";
 	}
 	
 	@GetMapping("/users")
