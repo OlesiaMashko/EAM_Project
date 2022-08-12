@@ -5,22 +5,22 @@ we have two sides one is for user and one is for admin.
 
 #USER side:
 features
--login
--registration
--add product
--update product
--request claim for product
--view all claims of product
--delete product
+1. login
+2. registration
+3. add product
+4. update product
+5. request claim for product
+6. view all claims of product
+7. delete product
 
 #ADMIN side:
 features
--login
--list of users
--update product
--do claim
--view all claims for product
--approve / reject claims
+1. login
+2. list of users
+3. update product
+4. do claim
+5. view all claims for product
+6. approve / reject claims
 
 #DATABASE:
 in database we are using MySql database and we have 4 tables in database
