@@ -76,7 +76,7 @@ public class ProductServiceImpl implements ProductService {
 		
 		Pageable pageable = PageRequest.of(pageNo - 1, pageSize, sort);
 		
-	String username = "parth";
+	//String username = "parth";
 	return this.productRepository.findByUserName(uname,pageable);
 	}
 
