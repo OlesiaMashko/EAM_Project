@@ -70,6 +70,15 @@ public class AdminController {
 		productService.saveProduct(product);
 		return "redirect:/userSpecific/" + tempUsername;
 	}
+		
+	
+	@GetMapping("/deleteProductAdmin/{id}")
+	public String deleteProductAdmin(@PathVariable (value = "id") long id) {
+		
+		this.productService.deleteProductById(id);
+		return "redirect:/userSpecific/" + tempUsername;
+	}
+	
 	
 	@GetMapping("/pageu/{pageNo}")
 	public String findPaginatedUser(@PathVariable (value = "pageNo") int pageNo, 

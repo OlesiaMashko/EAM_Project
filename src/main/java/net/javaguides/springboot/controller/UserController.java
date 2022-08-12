@@ -105,14 +105,7 @@ public class UserController {
 		model.addAttribute("product", product);
 		return "update_productAdmin";
 	}
-
 	
-	@GetMapping("/deleteProductAdmin/{id}")
-	public String deleteProductAdmin(@PathVariable (value = "id") long id) {
-		
-		this.productService.deleteProductById(id);
-		return "redirect:/userSpecific/" + tempUsername;
-	}
 	
 	@GetMapping("/page/{pageNo}")
 	public String findPaginated(@PathVariable (value = "pageNo") int pageNo, 
