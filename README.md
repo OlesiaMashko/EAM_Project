@@ -1,7 +1,8 @@
-# EAM_Project
-Final Project for Enterprise Application Modelling of Service Center Management using Spring Boot, Spring MVC, JPA, Thymeleaf and MySQL.
+# Service Center Management System
+Final Project of Enterprise Application Modelling Course.
+Service Center Management System is a Web Application built using Spring Boot, Spring MVC, JPA, Thymeleaf and MySQL for the back-end and HTML, CSS, Bootstrap for the front-end.
 
-we have two sides one is for user and one is for admin.
+We have two sides one is for user and one is for admin.
 
 #USER side:
 features
@@ -22,7 +23,8 @@ features
 5. view all claims for product
 6. approve / reject claims
 
-in this project, we are using Controllers, Models, Repositories and Service classes.
+In this project, we are using Controllers, Models, Repositories and Service classes.
+
 #DATABASE:
 in database we are using MySql database and we have 4 tables in database
 #this tables will create by it self when we run the project as spring boot application.
