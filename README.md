@@ -27,7 +27,7 @@ In this project, we are using Controllers, Models, Repositories and Service clas
 
 #DATABASE:
 in database we are using MySql database and we have 4 tables in database
-#this tables will create by it self when we run the project as spring boot application.
+#The tables will automatically be created by Hibernate when we run the project as spring boot application.
 1. users
 2. admin
 3. products
